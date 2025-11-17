@@ -3,12 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BORGES - Login</title>
+<title>BORGES</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Background Animado -->
+<canvas id="background"></canvas>
+
+<!-- HEADER -->
+<header>BORGES</header>
+
+<!-- LOGIN -->
 <section class="login-section">
   <div class="login-container">
     <h2>Login</h2>
@@ -17,6 +24,31 @@
     <button id="loginBtn">Entrar</button>
     <p id="loginMessage"></p>
   </div>
+</section>
+
+<!-- PLAYLISTS -->
+<section>
+  <h2>Playlists Spotify</h2>
+  <div class="playlist-container">
+    <div class="playlist">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
+      <a href="https://open.spotify.com/playlist/1m8nq6DHrq3jq8PQ0DoQps?si=rtYZ4cziQi-oy3GYU83VQg&pi=0yRMbopCQimZ4" target="_blank">Trap BR</a>
+    </div>
+    <div class="playlist">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
+      <a href="https://open.spotify.com/playlist/1j92C00fc1sKLyJmKSPFwk?si=gmA4mB0AQ72I2Vg3FwFKeg" target="_blank">Agressive ROCK</a>
+    </div>
+    <div class="playlist">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
+      <a href="https://open.spotify.com/playlist/6efMeohKNOXzndREOCxRtG?si=3XP0fMUqSeGY4jHaFPGEIw&pi=TDJzFKjASWWhj" target="_blank">Hondatrap</a>
+    </div>
+  </div>
+</section>
+
+<!-- VISITANTES -->
+<section>
+  <h2>Visitantes</h2>
+  <div class="counter" id="visitorCounter">0</div>
 </section>
 
 <script src="script.js"></script>
