@@ -4,21 +4,100 @@
 body, html {
   font-family: 'Montserrat', sans-serif;
   height: 100%;
-  background: linear-gradient(135deg, #0b0b0b, #1c1c1c);
+  overflow-x: hidden;
+  background: #0b0b0b;
+  color: #f0f0f0;
+  position: relative;
+}
+
+/* CANVAS BACKGROUND */
+#background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+}
+
+/* HEADER */
+header {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  font-size: 6rem;
+  font-weight: 900;
+  color: gold;
+  animation: blink 1.2s infinite;
+  text-shadow: 0 0 20px gold, 0 0 40px gold;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes blink {
+  0%,50%,100% { opacity: 1; }
+  25%,75% { opacity: 0.2; }
+}
+
+/* SEÇÕES */
+section {
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+section h2 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: gold;
+  text-shadow: 0 0 10px gold;
+}
+
+/* PLAYLIST CARDS */
+.playlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.playlist {
+  background: rgba(26,26,26,0.85);
+  padding: 20px;
+  border-radius: 20px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+.playlist:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px rgba(255,215,0,0.8);
+}
+
+.playlist img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.playlist a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* VISITANTES */
+.counter {
+  font-size: 2rem;
+  color: gold;
+  text-shadow: 0 0 5px gold;
 }
 
 /* LOGIN */
-.login-section {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
 .login-container {
   background: rgba(26,26,26,0.95);
   padding: 40px 30px;
@@ -27,6 +106,7 @@ body, html {
   max-width: 400px;
   box-shadow: 0 0 20px rgba(255,215,0,0.7);
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .login-container h2 {
@@ -70,12 +150,9 @@ body, html {
 }
 
 /* Responsividade */
-@media (max-width: 500px) {
-  .login-container {
-    padding: 30px 20px;
-  }
-
-  .login-container h2 {
-    font-size: 1.8rem;
-  }
+@media(max-width:500px){
+  .login-container{padding:30px 20px;}
+  .login-container h2{font-size:1.8rem;}
+  section h2{font-size:2rem;}
+  header{font-size:4rem;}
 }
