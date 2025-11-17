@@ -1,32 +1,66 @@
-// Pegar jogo via query string
-const params = new URLSearchParams(window.location.search);
-const jogo = params.get('jogo');
-const titulo = document.getElementById('titulo-jogo');
+// CONTADOR DE VISITANTES
+let counter = localStorage.getItem('visitorCounter') ? parseInt(localStorage.getItem('visitorCounter')) : 0;
 
-if (jogo === 'steal') {
-    titulo.textContent = 'STEAL A BRAINROT';
-} else if (jogo === 'blox') {
-    titulo.textContent = 'BLOX FRUIT';
+function updateCounter() {
+  counter += 5;
+  document.getElementById('visitorCounter').innerText = counter;
+  localStorage.setItem('visitorCounter', counter);
 }
 
-// Função para gerar código aleatório único
-function gerarCodigo(tamanho = 12) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let codigo = '';
-    for (let i = 0; i < tamanho; i++) {
-        codigo += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return codigo;
-}
+updateCounter();
 
-// Evento do botão "Paguei"
-document.getElementById('btn-paguei').addEventListener('click', () => {
-    const codigoContainer = document.getElementById('codigo-container');
-    const codigoGerado = document.getElementById('codigo-gerado');
-
-    codigoGerado.textContent = gerarCodigo();
-    codigoContainer.style.display = 'block';
-
-    // Scroll suave para mostrar o código
-    codigoContainer.scrollIntoView({ behavior: 'smooth' });
+// LOGIN SIMPLES
+document.getElementById('loginBtn').addEventListener('click', () => {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  if(username && password) {
+    alert(`Bem-vindo, ${username}!`);
+  } else {
+    alert("Preencha todos os campos!");
+  }
 });
+
+// CANVAS DINÂMICO AMPLED
+const canvas = document.getElementById('background');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+
+const particles = [];
+const particleCount = 120;
+
+for(let i=0;i<particleCount;i++){
+  particles.push({
+    x: Math.random()*width,
+    y: Math.random()*height,
+    size: Math.random()*3 + 1,
+    speedX: (Math.random()-0.5)*1.5,
+    speedY: (Math.random()-0.5)*1.5,
+    color: `rgba(255,215,0,${Math.random()})`
+  });
+}
+
+function animate() {
+  ctx.clearRect(0,0,width,height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if(p.x < 0 || p.x > width) p.speedX *= -1;
+    if(p.y < 0 || p.y > height) p.speedY *= -1;
+  });
+  requestAnimationFrame(animate);
+}
+
+animate();
