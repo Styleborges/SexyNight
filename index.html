@@ -1,112 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meu Bot • Home</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Página oficial - convites e painel do bot" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Bot - Página Oficial</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand">
-        <div class="logo">⚡</div>
-        <div>
-          <h1>MeuBot</h1>
-          <small>Suporte & Painéis</small>
-        </div>
-      </div>
-      <nav class="nav">
-        <a href="#produtos">Produtos</a>
-        <a href="#suporte">Suporte</a>
-        <a id="inviteHeaderBtn" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Convidar Bot</a>
-      </nav>
+
+<header class="header">
+    <div class="container header-content">
+        <div class="logo">🐐 MeuBot</div>
+
+        <nav class="nav">
+            <a href="#inicio">INÍCIO</a>
+            <a href="#produtos">PRODUTOS</a>
+            <a href="#suporte">SUPORTE</a>
+            <a href="#termos">TERMOS</a>
+        </nav>
+
+        <a href="https://discord.com/oauth2/authorize?client_id=1439907381386547276" 
+           class="btn-login">Login com Discord</a>
     </div>
-  </header>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-left">
-          <h2>Vamos tornar sua experiência melhor.</h2>
-          <p>Criamos ferramentas e painéis seguros para ajudar sua comunidade. Aqui você encontra convite para o bot, painel e suporte 24/7.</p>
-          <div class="hero-actions">
-            <a href="#produtos" class="btn btn-primary">Ver Produtos</a>
-            <a id="discordBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
-          </div>
+<section class="hero container">
+    <div class="hero-left">
+        <h1>Vamos tornar sua <span>experiência</span> melhor.</h1>
+        <p>Oferecemos serviços, painéis e suporte 24/7 da forma mais simples e rápida possível.</p>
 
-          <div class="info-card">
-            <strong>Precisa de ajuda?</strong>
-            <p>Abra um ticket no nosso servidor do Discord ou fale com a equipe.</p>
-            <a id="discordSupport" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
-          </div>
+        <a href="#produtos" class="btn-red">VER PRODUTOS</a>
+
+        <ul class="tags">
+            <li>⭐ Suporte Premium</li>
+            <li>🛡️ Segurança Garantida</li>
+            <li>🚀 Atualizações Constantes</li>
+        </ul>
+
+        <div class="card-suporte">
+            <h3>Precisa de ajuda?</h3>
+            <p>Entre no Discord para tirar dúvidas, fazer denúncias ou abrir ticket.</p>
+            <a href="https://discord.gg/SEU_SERVIDOR" class="btn-red">Entrar no Discord</a>
         </div>
+    </div>
 
-        <aside class="hero-right">
-          <div class="panel-preview">
-            <div class="panel-header">Painel do Bot</div>
-            <div class="panel-body">
-              <p class="muted">Visualização do painel — links e ações abaixo</p>
-              <div class="panel-stats">
-                <div>
-                  <div class="stat-number">1234</div>
-                  <div class="stat-label">Usuários</div>
-                </div>
-                <div>
-                  <div class="stat-number">56</div>
-                  <div class="stat-label">Servidores</div>
-                </div>
-                <div>
-                  <div class="stat-number">24/7</div>
-                  <div class="stat-label">Suporte</div>
-                </div>
-              </div>
+    <div class="hero-right">
+        <div class="painel-card">
+            <div class="painel-header">Painel do MeuBot</div>
 
-              <div class="panel-actions">
-                <a id="openPanelBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Abrir Painel</a>
-                <a id="buyBtn" class="btn btn-secondary" href="#produtos">Adquirir Agora</a>
-              </div>
+            <div class="painel-body">
+                <p>Gerencie seu bot facilmente com nosso painel dedicado.</p>
+
+                <div class="stats">
+                    <div><strong>99.9%</strong><span>Uptime</span></div>
+                    <div><strong>24/7</strong><span>Suporte</span></div>
+                    <div><strong>260+</strong><span>Servidores</span></div>
+                </div>
+
+                <a href="#" class="btn-red painel-btn">Abrir Painel</a>
             </div>
-          </div>
-        </aside>
-      </div>
-    </section>
+        </div>
+    </div>
+</section>
 
-    <section id="produtos" class="container produtos">
-      <h3>Produtos & Serviços</h3>
-      <div class="cards">
-        <article class="card">
-          <h4>Painel Premium</h4>
-          <p>Acesso ao painel com recursos exclusivos.</p>
-          <div class="card-footer">
-            <span class="price">R$ 9,90</span>
-            <a class="btn btn-ghost" href="#suporte">Mais info</a>
-          </div>
-        </article>
+<footer class="footer">
+    © 2025 MeuBot — Todos os direitos reservados
+</footer>
 
-        <article class="card">
-          <h4>Configuração</h4>
-          <p>Instalação e configuração personalizada.</p>
-          <div class="card-footer">
-            <span class="price">Sob consulta</span>
-            <a class="btn btn-ghost" href="#suporte">Contratar</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="suporte" class="container suporte">
-      <h3>Suporte</h3>
-      <p>Se tiver dúvidas, problemas ou quiser denunciar algo, abra um ticket no Discord.</p>
-      <a id="supportInvite" class="btn btn-primary" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© <span id="year"></span> MeuBot • Todos os direitos reservados</div>
-      <div><a href="#termos">Termos</a> • <a href="#privacidade">Privacidade</a></div>
+<script src="script.js"></script>
+</body>
+</html>      <div><a href="#termos">Termos</a> • <a href="#privacidade">Privacidade</a></div>
     </div>
   </footer>
 
