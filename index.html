@@ -1,56 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BORGES</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meu Bot • Home</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Página oficial - convites e painel do bot" />
 </head>
 <body>
-
-<!-- Background Animado -->
-<canvas id="background"></canvas>
-
-<!-- HEADER -->
-<header>BORGES</header>
-
-<!-- LOGIN -->
-<section class="login-section">
-  <div class="login-container">
-    <h2>Login</h2>
-    <input type="text" placeholder="Usuário" id="username">
-    <input type="password" placeholder="Senha" id="password">
-    <button id="loginBtn">Entrar</button>
-    <p id="loginMessage"></p>
-  </div>
-</section>
-
-<!-- PLAYLISTS -->
-<section>
-  <h2>Playlists Spotify</h2>
-  <div class="playlist-container">
-    <div class="playlist">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
-      <a href="https://open.spotify.com/playlist/1m8nq6DHrq3jq8PQ0DoQps?si=rtYZ4cziQi-oy3GYU83VQg&pi=0yRMbopCQimZ4" target="_blank">Trap BR</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <div>
+          <h1>MeuBot</h1>
+          <small>Suporte & Painéis</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#produtos">Produtos</a>
+        <a href="#suporte">Suporte</a>
+        <a id="inviteHeaderBtn" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Convidar Bot</a>
+      </nav>
     </div>
-    <div class="playlist">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
-      <a href="https://open.spotify.com/playlist/1j92C00fc1sKLyJmKSPFwk?si=gmA4mB0AQ72I2Vg3FwFKeg" target="_blank">Agressive ROCK</a>
-    </div>
-    <div class="playlist">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify Icon">
-      <a href="https://open.spotify.com/playlist/6efMeohKNOXzndREOCxRtG?si=3XP0fMUqSeGY4jHaFPGEIw&pi=TDJzFKjASWWhj" target="_blank">Hondatrap</a>
-    </div>
-  </div>
-</section>
+  </header>
 
-<!-- VISITANTES -->
-<section>
-  <h2>Visitantes</h2>
-  <div class="counter" id="visitorCounter">0</div>
-</section>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h2>Vamos tornar sua experiência melhor.</h2>
+          <p>Criamos ferramentas e painéis seguros para ajudar sua comunidade. Aqui você encontra convite para o bot, painel e suporte 24/7.</p>
+          <div class="hero-actions">
+            <a href="#produtos" class="btn btn-primary">Ver Produtos</a>
+            <a id="discordBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
+          </div>
 
-<script src="script.js"></script>
+          <div class="info-card">
+            <strong>Precisa de ajuda?</strong>
+            <p>Abra um ticket no nosso servidor do Discord ou fale com a equipe.</p>
+            <a id="discordSupport" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
+          </div>
+        </div>
+
+        <aside class="hero-right">
+          <div class="panel-preview">
+            <div class="panel-header">Painel do Bot</div>
+            <div class="panel-body">
+              <p class="muted">Visualização do painel — links e ações abaixo</p>
+              <div class="panel-stats">
+                <div>
+                  <div class="stat-number">1234</div>
+                  <div class="stat-label">Usuários</div>
+                </div>
+                <div>
+                  <div class="stat-number">56</div>
+                  <div class="stat-label">Servidores</div>
+                </div>
+                <div>
+                  <div class="stat-number">24/7</div>
+                  <div class="stat-label">Suporte</div>
+                </div>
+              </div>
+
+              <div class="panel-actions">
+                <a id="openPanelBtn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Abrir Painel</a>
+                <a id="buyBtn" class="btn btn-secondary" href="#produtos">Adquirir Agora</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="produtos" class="container produtos">
+      <h3>Produtos & Serviços</h3>
+      <div class="cards">
+        <article class="card">
+          <h4>Painel Premium</h4>
+          <p>Acesso ao painel com recursos exclusivos.</p>
+          <div class="card-footer">
+            <span class="price">R$ 9,90</span>
+            <a class="btn btn-ghost" href="#suporte">Mais info</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h4>Configuração</h4>
+          <p>Instalação e configuração personalizada.</p>
+          <div class="card-footer">
+            <span class="price">Sob consulta</span>
+            <a class="btn btn-ghost" href="#suporte">Contratar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="suporte" class="container suporte">
+      <h3>Suporte</h3>
+      <p>Se tiver dúvidas, problemas ou quiser denunciar algo, abra um ticket no Discord.</p>
+      <a id="supportInvite" class="btn btn-primary" href="#" target="_blank" rel="noopener">Entrar no Discord</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> MeuBot • Todos os direitos reservados</div>
+      <div><a href="#termos">Termos</a> • <a href="#privacidade">Privacidade</a></div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
