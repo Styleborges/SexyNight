@@ -22,8 +22,10 @@ const errorBox = document.getElementById("errorBox");
 
 const lightbox = document.getElementById("lightbox");
 const closeLightbox = document.getElementById("closeLightbox");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
 const lightboxBody = document.getElementById("lightboxBody");
 const lightboxName = document.getElementById("lightboxName");
+const openSource = document.getElementById("openSource");
 
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -42,6 +44,13 @@ closeLightbox.addEventListener("click", hideLightbox);
 lightbox.addEventListener("click", (e) => { if (e.target === lightbox) hideLightbox(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideLightbox(); });
 
+fullscreenBtn.addEventListener("click", () => {
+  const el = lightboxBody.querySelector("video, img");
+  if (!el) return;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+});
+
 async function loadCatalog(bustCache = false) {
   try {
     errorBox.classList.add("hidden");
@@ -50,13 +59,9 @@ async function loadCatalog(bustCache = false) {
     const url = bustCache ? `media.json?ts=${Date.now()}` : "media.json";
     const res = await fetch(url, { cache: "no-store" });
 
-    if (!res.ok) {
-      throw new Error(`Não achei media.json (HTTP ${res.status}).`);
-    }
+    if (!res.ok) throw new Error(`Não achei media.json (HTTP ${res.status}).`);
 
     catalog = await res.json();
-
-    // garante chaves
     for (const k of ["photos", "shorts", "free", "premium"]) {
       if (!Array.isArray(catalog[k])) catalog[k] = [];
     }
@@ -102,25 +107,22 @@ function render() {
 
 function cardHTML(item) {
   const tag = (item.bucket || currentTab).toUpperCase();
-  const badge = tag;
   const payload = escAttr(JSON.stringify(item));
   const name = esc(item.name || "");
+  const kind = (item.type === "photo") ? "FOTO" : "VÍDEO";
 
   let media = "";
   if (item.type === "photo") {
     media = `<img src="${escAttr(item.url)}" alt="${name}" loading="lazy">`;
   } else {
-    media = `
-      <video muted playsinline preload="metadata">
-        <source src="${escAttr(item.url)}" type="video/mp4">
-      </video>
-    `;
+    // thumbnail leve no card (vídeo só carrega no lightbox)
+    media = `<div class="thumb"><div class="play">▶</div></div>`;
   }
 
   return `
     <article class="card" data-open="${payload}">
       <div class="media">
-        <span class="badge">${esc(badge)}</span>
+        <span class="badge">${esc(kind)}</span>
         ${media}
       </div>
       <div class="meta">
@@ -134,17 +136,24 @@ function cardHTML(item) {
 function showLightbox(item) {
   lightboxBody.innerHTML = "";
   lightboxName.textContent = item.name || "";
+  openSource.href = item.url || "#";
 
   if (item.type === "photo") {
     lightboxBody.innerHTML = `<img src="${escAttr(item.url)}" alt="${esc(item.name || "")}">`;
   } else {
+    // tenta identificar mime por extensão (mp4/webm)
+    const url = String(item.url || "");
+    const isWebm = url.toLowerCase().endsWith(".webm");
+    const mime = isWebm ? "video/webm" : "video/mp4";
+
     lightboxBody.innerHTML = `
       <video controls autoplay playsinline preload="metadata">
-        <source src="${escAttr(item.url)}" type="video/mp4">
+        <source src="${escAttr(url)}" type="${mime}">
       </video>
     `;
   }
 
+  fullscreenBtn.disabled = false;
   lightbox.classList.remove("hidden");
 }
 

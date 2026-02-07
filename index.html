@@ -25,7 +25,7 @@
     <section class="hero">
       <div class="hero-left">
         <h1>Galeria por pastas</h1>
-        <p>Arquivos em <code>media/</code> + catálogo em <code>media.json</code>. Busca por nome e abas.</p>
+        <p>Arquivos em <code>media/</code> + catálogo em <code>media.json</code>. Clique pra abrir em tela cheia.</p>
       </div>
       <div class="hero-right">
         <div class="stat">
@@ -63,9 +63,14 @@
 
   <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
     <div class="lightbox-card">
-      <button id="closeLightbox" class="x" type="button">✕</button>
+      <button id="fullscreenBtn" class="fs-btn" type="button" title="Tela cheia">⛶</button>
+      <button id="closeLightbox" class="x" type="button" title="Fechar">✕</button>
+
       <div id="lightboxBody" class="lightbox-body"></div>
-      <div id="lightboxName" class="lightbox-name"></div>
+      <div class="lightbox-footer">
+        <div id="lightboxName" class="lightbox-name"></div>
+        <a id="openSource" class="open-src" href="#" target="_blank" rel="noreferrer">Abrir arquivo</a>
+      </div>
     </div>
   </div>
 
@@ -79,4 +84,4 @@
 
   <script src="script.js"></script>
 </body>
-</html> 
+</html>
