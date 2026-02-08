@@ -8,6 +8,10 @@ const TAB_TITLES = {
 let currentTab = "photos";
 let catalog = { photos: [], shorts: [], free: [], premium: [] };
 
+/** Gate Premium (placeholder) */
+let premiumUnlocked = false;
+const PREMIUM_CODE = "1234"; // troque por um código seu
+
 const grid = document.getElementById("grid");
 const empty = document.getElementById("empty");
 const title = document.getElementById("title");
@@ -25,14 +29,23 @@ const closeLightbox = document.getElementById("closeLightbox");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const lightboxBody = document.getElementById("lightboxBody");
 const lightboxName = document.getElementById("lightboxName");
-const openSource = document.getElementById("openSource");
+
+const gate = document.getElementById("gate");
+const gateClose = document.getElementById("gateClose");
+const gateBtn = document.getElementById("gateBtn");
+const gateCode = document.getElementById("gateCode");
+const gateMsg = document.getElementById("gateMsg");
 
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
-    btn.classList.add("active");
-    currentTab = btn.dataset.tab;
-    render();
+    const nextTab = btn.dataset.tab;
+
+    if (nextTab === "premium" && !premiumUnlocked) {
+      openGate();
+      return;
+    }
+
+    setActiveTab(nextTab);
   });
 });
 
@@ -42,7 +55,12 @@ reloadBtn.addEventListener("click", () => loadCatalog(true));
 
 closeLightbox.addEventListener("click", hideLightbox);
 lightbox.addEventListener("click", (e) => { if (e.target === lightbox) hideLightbox(); });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideLightbox(); });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    hideLightbox();
+    closeGate();
+  }
+});
 
 fullscreenBtn.addEventListener("click", () => {
   const el = lightboxBody.querySelector("video, img");
@@ -51,6 +69,15 @@ fullscreenBtn.addEventListener("click", () => {
   else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 });
 
+function setActiveTab(nextTab) {
+  document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+  const btn = document.querySelector(`.tab[data-tab="${nextTab}"]`);
+  if (btn) btn.classList.add("active");
+
+  currentTab = nextTab;
+  render();
+}
+
 async function loadCatalog(bustCache = false) {
   try {
     errorBox.classList.add("hidden");
@@ -58,7 +85,6 @@ async function loadCatalog(bustCache = false) {
 
     const url = bustCache ? `media.json?ts=${Date.now()}` : "media.json";
     const res = await fetch(url, { cache: "no-store" });
-
     if (!res.ok) throw new Error(`Não achei media.json (HTTP ${res.status}).`);
 
     catalog = await res.json();
@@ -73,8 +99,7 @@ async function loadCatalog(bustCache = false) {
     grid.innerHTML = "";
     empty.classList.remove("hidden");
     empty.textContent = "Nada para mostrar.";
-    errorBox.textContent =
-      `Falha ao carregar media.json. Confere se ele existe na raiz do repo e abre em: /media.json. Detalhe: ${String(e.message || e)}`;
+    errorBox.textContent = `Falha ao carregar media.json. Detalhe: ${String(e.message || e)}`;
     errorBox.classList.remove("hidden");
   }
 }
@@ -95,7 +120,6 @@ function render() {
 
   grid.innerHTML = filtered.map(cardHTML).join("");
 
-  // click abre lightbox
   grid.querySelectorAll("[data-open]").forEach((el) => {
     el.addEventListener("click", () => {
       const payload = el.getAttribute("data-open");
@@ -105,20 +129,13 @@ function render() {
     });
   });
 
-  // força thumbnail do vídeo = 1º frame (sem tocar)
+  // thumbnail do vídeo = 1º frame (sem tocar)
   grid.querySelectorAll("video.vthumb").forEach((v) => {
     v.addEventListener("loadedmetadata", () => {
-      try {
-        v.currentTime = Math.min(0.1, v.duration || 0.1);
-      } catch {}
+      try { v.currentTime = Math.min(0.1, v.duration || 0.1); } catch {}
     }, { once: true });
 
     v.addEventListener("seeked", () => {
-      try { v.pause(); } catch {}
-    }, { once: true });
-
-    v.addEventListener("error", () => {
-      // se falhar, deixa parado (fundo escuro já existe)
       try { v.pause(); } catch {}
     }, { once: true });
   });
@@ -137,7 +154,6 @@ function cardHTML(item) {
     const url = String(item.url || "");
     const isWebm = url.toLowerCase().endsWith(".webm");
     const mime = isWebm ? "video/webm" : "video/mp4";
-    // se você adicionar "poster" no JSON, o browser usa como fallback
     const poster = item.poster ? `poster="${escAttr(item.poster)}"` : "";
     media = `
       <video class="vthumb" muted playsinline preload="metadata" ${poster}>
@@ -163,7 +179,6 @@ function cardHTML(item) {
 function showLightbox(item) {
   lightboxBody.innerHTML = "";
   lightboxName.textContent = item.name || "";
-  openSource.href = item.url || "#";
 
   if (item.type === "photo") {
     lightboxBody.innerHTML = `<img src="${escAttr(item.url)}" alt="${esc(item.name || "")}">`;
@@ -171,8 +186,13 @@ function showLightbox(item) {
     const url = String(item.url || "");
     const isWebm = url.toLowerCase().endsWith(".webm");
     const mime = isWebm ? "video/webm" : "video/mp4";
+
+    // Dificulta botão "download" (não impede acesso via URL pública)
     lightboxBody.innerHTML = `
-      <video controls autoplay playsinline preload="metadata">
+      <video controls autoplay playsinline preload="metadata"
+             controlsList="nodownload noplaybackrate"
+             disablePictureInPicture
+             oncontextmenu="return false">
         <source src="${escAttr(url)}" type="${mime}">
       </video>
     `;
@@ -188,6 +208,29 @@ function hideLightbox() {
   lightbox.classList.add("hidden");
 }
 
+/* Gate Premium */
+function openGate() {
+  gateMsg.textContent = "";
+  gateCode.value = "";
+  gate.classList.remove("hidden");
+  setTimeout(() => gateCode.focus(), 0);
+}
+function closeGate() { gate.classList.add("hidden"); }
+
+gateClose.addEventListener("click", closeGate);
+gate.addEventListener("click", (e) => { if (e.target === gate) closeGate(); });
+
+gateBtn.addEventListener("click", () => {
+  const code = (gateCode.value || "").trim();
+  if (!code) { gateMsg.textContent = "Digite um código."; return; }
+  if (code !== PREMIUM_CODE) { gateMsg.textContent = "Código inválido."; return; }
+
+  premiumUnlocked = true;
+  closeGate();
+  setActiveTab("premium");
+});
+
+/* Utils */
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;",
